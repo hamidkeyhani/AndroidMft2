@@ -1,0 +1,2 @@
+rootProject.name='AndroidMft2'
+include ':app'
