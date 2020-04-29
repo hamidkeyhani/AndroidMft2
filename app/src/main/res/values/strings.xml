@@ -2,4 +2,5 @@
     <string name="app_name">AndroidMft2</string>
     <string name="music_player">موزیک پلیر</string>
     <string name="video_player">ویدئو پلیر</string>
+    <string name="content">image</string>
 </resources>
