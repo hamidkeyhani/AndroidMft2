@@ -110,6 +110,7 @@ public class MusicPlayerActivity extends AppCompatActivity {
             }
         });
 
+        Log.i(TAG, "setUpView: again code");
         timer = new Timer();
         timer.schedule(new MyTimrer(),0,1000);
 
@@ -132,6 +133,18 @@ public class MusicPlayerActivity extends AppCompatActivity {
 
             }
         });
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                activityMusicPlayerBinding.play.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                activityMusicPlayerBinding.currentDuration.setText(formatDuration(0));
+                activityMusicPlayerBinding.seekBar.setProgress(0);
+                timer.cancel();
+//                mediaPlayer.stop();
+//                mediaPlayer.release();
+            }
+        });
     }
 
     private class MyTimrer extends TimerTask {
@@ -141,11 +154,12 @@ public class MusicPlayerActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    activityMusicPlayerBinding.currentDuration.setText(formatDuration(mediaPlayer.getCurrentPosition()));
-                    activityMusicPlayerBinding.seekBar.setProgress(mediaPlayer.getCurrentPosition() / 1000);
+                    if (mediaPlayer != null) {
+                        activityMusicPlayerBinding.currentDuration.setText(formatDuration(mediaPlayer.getCurrentPosition()));
+                        activityMusicPlayerBinding.seekBar.setProgress(mediaPlayer.getCurrentPosition() / 1000);
+                    }
                 }
             });
-
         }
     }
 
