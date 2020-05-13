@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.SeekBar;
 
 import com.example.androidmft2.R;
 import com.example.androidmft2.databinding.ActivityMusicPlayerBinding;
@@ -111,9 +111,27 @@ public class MusicPlayerActivity extends AppCompatActivity {
         });
 
         timer = new Timer();
-        timer.schedule(new MyTimrer(),1000);
+        timer.schedule(new MyTimrer(),0,1000);
 
+        activityMusicPlayerBinding.seekBar.setMax(mediaPlayer.getDuration()/1000);
+        activityMusicPlayerBinding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (b && mediaPlayer != null){
+                    mediaPlayer.seekTo(i * 1000);
+                }
+            }
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private class MyTimrer extends TimerTask {
@@ -123,8 +141,8 @@ public class MusicPlayerActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(MusicPlayerActivity.this, "this section", Toast.LENGTH_SHORT).show();
-//                    activityMusicPlayerBinding.currentDuration.setText(formatDuration(mediaPlayer.getCurrentPosition()));
+                    activityMusicPlayerBinding.currentDuration.setText(formatDuration(mediaPlayer.getCurrentPosition()));
+                    activityMusicPlayerBinding.seekBar.setProgress(mediaPlayer.getCurrentPosition() / 1000);
                 }
             });
 
