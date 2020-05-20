@@ -170,5 +170,11 @@ public class MusicPlayerActivity extends AppCompatActivity {
         return String.format(Locale.ENGLISH, "%02d",min) + ":" + String.format(Locale.ENGLISH,"%02d",seconds);
     }
 
+    @Override
+    protected void onDestroy() {
+        timer.cancel();
+        timer.purge();
+        super.onDestroy();
+    }
 
 }
